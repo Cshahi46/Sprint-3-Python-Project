@@ -1,4 +1,7 @@
 # Video Game Sales Dataset
+# Source: Adapted from VGChartz (public domain estimates)
+# Each row: [rank, name, platform, year, genre, publisher, na_sales, eu_sales, jp_sales, global_sales]
+
 video_game_sales = [
     [1, 'Wii Sports', 'Wii', 2006, 'Sports', 'Nintendo', 41.49, 29.02, 3.77, 82.74],
     [2, 'Super Mario Bros.', 'NES', 1985, 'Platform', 'Nintendo', 29.08, 3.58, 6.81, 40.24],
@@ -22,6 +25,7 @@ video_game_sales = [
     [20, 'Pokemon Diamond/Pearl', 'DS', 2006, 'Role-Playing', 'Nintendo', 6.42, 4.52, 6.04, 18.36],
 ]
 
+# Column index reference (use these throughout the project)
 RANK = 0
 NAME = 1
 PLATFORM = 2
@@ -33,18 +37,21 @@ EU_SALES = 7
 JP_SALES = 8
 GLOBAL_SALES = 9
 
-messy_names = ['  Wii Sports  ', 'TETRIS', '  mario kart WII']
+# a) Total number of games
+total_games = len(video_game_sales)
+print(total_games)
 
-# a) Extract the 5th game name and get "Pokemon"
-game_name = video_game_sales[4][NAME]
-print(game_name[:7])  # Pokemon
+# b) Average global sales across all games
+total_global_sales = 0
 
-# b) Clean the messy names
-for name in messy_names:
-    clean_name = name.strip().lower()
-    print(clean_name)
+for game in video_game_sales:
+    total_global_sales += game[GLOBAL_SALES]
 
-# c) Print formatted summary of the #1 game
-top_game = video_game_sales[0]
+avg_global_sales = total_global_sales / total_games
+print("Average global sales:", avg_global_sales)
 
-print(f"#{top_game[RANK]} Best Seller: {top_game[NAME]} ({top_game[YEAR]}) - ${top_game[GLOBAL_SALES]}M global sales")
+# c) Percentage of total global sales represented by Wii Sports
+top_game_sales = video_game_sales[0][GLOBAL_SALES]
+top_game_share = (top_game_sales / total_global_sales) * 100
+
+print("Wii Sports share of total global sales:", top_game_share, "%")
